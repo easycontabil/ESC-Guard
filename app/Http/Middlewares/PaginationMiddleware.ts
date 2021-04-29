@@ -4,7 +4,7 @@ import { Injectable, NestMiddleware, RequestMethod } from '@nestjs/common'
 @Injectable()
 export class PaginationMiddleware implements NestMiddleware {
   static get routes(): RouteMiddleware[] {
-    return []
+    return [{ path: '/users', method: RequestMethod.GET }]
   }
 
   use(req, res, next) {

@@ -1,4 +1,5 @@
 import Env from '@secjs/env'
+import App from 'providers/ApplicationProvider'
 
 export default {
   /*
@@ -12,11 +13,16 @@ export default {
   |
   */
   postgres: {
+    type: 'postgres',
     host: Env('DB_HOST', 'localhost'),
     port: Env('DB_PORT', '5432'),
     username: Env('DB_USERNAME', 'root'),
     password: Env('DB_PASSWORD', 'root'),
     database: Env('DB_DATABASE', 'test'),
+    migrations: ['database/migrations/*{.ts,.js}'],
+    cli: {
+      migrationsDir: 'database/migrations',
+    },
     synchronize: Env({ name: 'DB_SYNCHRONIZE', type: 'boolean' }, false),
   },
 

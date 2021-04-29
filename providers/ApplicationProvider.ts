@@ -17,6 +17,17 @@ export class ApplicationProvider {
     return ApplicationProvider.models
   }
 
+  get typeOrmConnection() {
+    return {
+      entities: this.models,
+      ...ApplicationProvider.configs.database.postgres,
+    }
+  }
+
+  get repositories() {
+    return ApplicationProvider.repositories
+  }
+
   get configs() {
     return {
       isGlobal: true,
@@ -34,12 +45,18 @@ export class ApplicationProvider {
   }
 
   get providers() {
-    return [
+    let providers = [
       ...ApplicationProvider.pipes,
       ...ApplicationProvider.services,
       ...ApplicationProvider.httpGuards,
       ...ApplicationProvider.repositories,
     ]
+
+    providers = providers.filter(provider => {
+      if (!provider.prototype.onlyFromImports) return provider
+    })
+
+    return providers
   }
 
   constructor() {

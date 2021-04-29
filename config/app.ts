@@ -97,7 +97,7 @@ export default {
   | Default environment of the application.
   |
   */
-  enviroment: Env('NODE_ENV', 'development'),
+  environment: Env('NODE_ENV', 'development'),
 
   /*
   |--------------------------------------------------------------------------

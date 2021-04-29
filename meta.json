@@ -1,0 +1,4 @@
+{
+  "commit": "<GITHUB_SHA>",
+  "short_commit": "<GITHUB_SHA_SHORT>"
+}

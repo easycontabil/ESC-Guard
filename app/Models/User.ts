@@ -1,6 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm'
+import { UserToken } from './UserToken'
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: string
@@ -14,9 +22,21 @@ export class User {
   @Column()
   password: string
 
-  @Column()
+  @Column({ enum: ['pendent', 'active'], default: 'pendent' })
+  status: string
+
+  @Column({ default: null })
   deletedAt: Date
 
-  @Column({ enum: ['pendent', 'active'] })
-  status: string
+  @CreateDateColumn()
+  createdAt: Date
+
+  @UpdateDateColumn()
+  updatedAt: Date
+
+  @OneToMany(
+    () => UserToken,
+    token => token.user,
+  )
+  tokens: UserToken[]
 }

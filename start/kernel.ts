@@ -1,9 +1,11 @@
 import App from 'providers/ApplicationProvider'
 
-import { ConfigModule } from '@nestjs/config'
-import { PassportModule } from '@nestjs/passport'
+import { JwtModule } from '@nestjs/jwt'
 import { HttpModule } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { PassportModule } from '@nestjs/passport'
+import { MailerModule } from '@nestjs-modules/mailer'
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 export default [
   ConfigModule.forRoot(App.configs),
   HttpModule.register(App.configs.http),
-  TypeOrmModule.forFeature(App.models),
-  TypeOrmModule.forRoot(App.configs.database.postgres),
+  MailerModule.forRoot(App.configs.mail),
+  TypeOrmModule.forFeature(App.repositories),
+  TypeOrmModule.forRoot(App.typeOrmConnection),
+  JwtModule.register(App.configs.app.authorization.jwt),
   PassportModule.register(App.configs.app.authorization),
 ]
