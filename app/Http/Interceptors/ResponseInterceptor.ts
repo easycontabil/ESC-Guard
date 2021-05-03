@@ -22,10 +22,17 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
     }
 
     return next.handle().pipe(
-      map(data => ({
-        ...defaultResponses,
-        data,
-      })),
+      map(data => {
+        if (data.data && data.pagination) {
+          return {
+            ...defaultResponses,
+            data: data.data,
+            pagination: data.pagination,
+          }
+        }
+
+        return { data, ...defaultResponses }
+      }),
     )
   }
 }

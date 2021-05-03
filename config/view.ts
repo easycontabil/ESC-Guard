@@ -11,6 +11,6 @@ export default {
   */
 
   paths: {
-    mail: [process.cwd() + '/app/Views/Mail/'],
+    mail: [process.cwd() + '/public/Views/Mail'],
   },
 }

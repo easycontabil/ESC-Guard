@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import { SwaggerModule } from '@nestjs/swagger'
 import { AllExceptionFilter } from 'app/Http/Filters/AllExceptionFilter'
+import { ResponseInterceptor } from '../app/Http/Interceptors/ResponseInterceptor'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -17,6 +18,7 @@ async function bootstrap() {
   app.enableCors(Config.get('cors'))
   app.use(rateLimit(Config.get('ratelimit')))
   app.setGlobalPrefix(Config.get('app.prefix'))
+  app.useGlobalInterceptors(new ResponseInterceptor())
   app.useGlobalFilters(new AllExceptionFilter(Config))
 
   SwaggerModule.setup(

@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm'
+
 import { User } from './User'
 
 @Entity('user_tokens')
@@ -30,11 +31,8 @@ export class UserToken {
   })
   type: string
 
-  @Column({ enum: ['created', 'revoked'], default: 'created' })
+  @Column({ enum: ['created', 'used'], default: 'created' })
   status: string
-
-  @Column({ default: false })
-  isRevoked: boolean
 
   @Column({ nullable: true })
   expiresIn: string
@@ -45,7 +43,7 @@ export class UserToken {
   @UpdateDateColumn()
   updatedAt: Date
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: null })
   revokedAt: Date
 
   @ManyToOne(

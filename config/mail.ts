@@ -1,18 +1,19 @@
 import view from './view'
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
+import Env from '@secjs/env'
 
 export default {
   transport: {
-    host: 'smtp.example.com',
-    port: 587,
+    host: Env('SMTP_HOST', ''),
+    port: Env({ name: 'SMTP_PORT', type: 'number' }, ''),
     secure: false, // upgrade later with STARTTLS
     auth: {
-      user: 'username',
-      pass: 'password',
+      user: Env('SMTP_USER', ''),
+      pass: Env('SMTP_PASSWORD', ''),
     },
   },
   defaults: {
-    from: '"nest-modules" <modules@nestjs.com>',
+    from: Env('SMTP_DEFAULT_FROM', ''),
   },
   template: {
     dir: view.paths.mail[0],

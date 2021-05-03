@@ -5,8 +5,9 @@ import { PipeTransform, Injectable } from '@nestjs/common'
 export class QueryParamsPipe implements PipeTransform {
   transform(value: any): ApiRequestContract {
     const apiRequest: ApiRequestContract = {
-      where: [],
-      orderBy: [],
+      isInternRequest: false,
+      where: {},
+      orderBy: {},
       includes: [],
     }
 
@@ -15,23 +16,23 @@ export class QueryParamsPipe implements PipeTransform {
       const orderByKey = key.split('-')[1]
       const includesKey = key.split('_')[1]
 
-      if (whereKey) {
-        apiRequest.where.push({ key: whereKey, value: key[value] })
+      if (whereKey && value[key]) {
+        apiRequest.where[whereKey] = value[key]
+
+        if (apiRequest.where[whereKey] === 'null')
+          apiRequest.where[whereKey] = null
 
         return
       }
 
-      if (orderByKey) {
-        apiRequest.orderBy.push({
-          key: orderByKey,
-          ordenation: (key[value] as 'ASC') || 'DESC',
-        })
+      if (orderByKey && value[key]) {
+        apiRequest.orderBy[orderByKey] = (value[key] as 'ASC') || 'DESC'
 
         return
       }
 
-      if (includesKey) {
-        apiRequest.includes.push({ relation: includesKey })
+      if (includesKey && value[key]) {
+        apiRequest.includes[includesKey] = value[key]
       }
     })
 

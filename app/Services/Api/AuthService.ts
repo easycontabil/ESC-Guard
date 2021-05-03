@@ -4,9 +4,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common'
+
 import { JwtService } from '@nestjs/jwt'
 import { MailerService } from '@nestjs-modules/mailer'
 import { CreateUserDto } from 'app/Contracts/Dtos/UserDto'
+import { UserService } from 'app/Services/Api/UserService'
 import { HashService } from 'app/Services/Utils/HashService'
 import { UserRepository } from 'app/Repositories/UserRepository'
 import { UserTokenService } from 'app/Services/Api/UserTokenService'
@@ -15,51 +17,46 @@ import { UserTokenService } from 'app/Services/Api/UserTokenService'
 export class AuthService {
   @Inject(JwtService) private jwtService: JwtService
   @Inject(HashService) private hashService: HashService
+  @Inject(UserService) private userService: UserService
   @Inject(MailerService) private mailerService: MailerService
   @Inject(UserRepository) private userRepository: UserRepository
   @Inject(UserTokenService) private userTokenService: UserTokenService
 
   async validateEmail(email: string) {
-    const user = await this.userRepository.getOne(null, {
-      where: [{ key: 'email', value: email }],
-    })
+    const user = await this.userRepository.getOne(null, { where: { email } })
 
     if (user) throw new UnauthorizedException('EMAIL_ALREADY_TAKEN')
   }
 
   async login({ email, password }) {
-    const user = await this.userRepository.findOne(null, {
-      where: [{ key: 'email', value: email }],
-    })
+    const user = await this.userService.findOne(null, { where: { email } })
 
-    if (await this.hashService.compareHash(password, user.password)) {
+    if (!(await this.hashService.compareHash(password, user.password))) {
       throw new NotFoundException('USER_NOT_FOUND')
     }
 
-    delete user.password
-
     const accessTokenExp = 10800
-    const accessToken = await this.jwtService.signAsync(user, {
+    const accessToken = await this.jwtService.signAsync(user.toJSON(), {
       expiresIn: accessTokenExp,
     })
 
-    this.userTokenService.createOrUpdate({
+    await this.userTokenService.createOrUpdate({
       userId: user.id,
       token: accessToken,
       type: 'access_token',
-      expiresIn: accessTokenExp.toString(),
+      expiresIn: `${accessTokenExp * 1000}`,
     })
 
     const refreshTokenExp = 604800
-    const refreshToken = await this.jwtService.signAsync(user, {
+    const refreshToken = await this.jwtService.signAsync(user.toJSON(), {
       expiresIn: refreshTokenExp,
     })
 
-    this.userTokenService.createOrUpdate({
+    await this.userTokenService.createOrUpdate({
       userId: user.id,
       token: refreshToken,
       type: 'refresh_token',
-      expiresIn: refreshTokenExp.toString(),
+      expiresIn: `${refreshTokenExp * 1000}`,
     })
 
     return { accessToken, refreshToken, accessTokenExp, refreshTokenExp }
@@ -76,14 +73,14 @@ export class AuthService {
       userId: user.id,
       token: await this.hashService.generateHash(body.email),
       type: 'email_confirmation',
-      expiresIn: '604800',
+      expiresIn: `${604800 * 1000}`,
     })
 
-    this.mailerService.sendMail({
+    await this.mailerService.sendMail({
       to: user.email,
       from: 'noreply@application.com',
       subject: 'Email de confirmação',
-      template: 'email-confirmation',
+      template: './email-confirmation',
       context: {
         token: confirmationToken.token,
       },
@@ -93,9 +90,7 @@ export class AuthService {
   }
 
   async forgotPassword({ email }) {
-    const user = await this.userRepository.getOne(null, {
-      where: [{ key: 'email', value: email }],
-    })
+    const user = await this.userRepository.getOne(null, { where: { email } })
 
     if (!user) throw new NotFoundException('USER_NOT_FOUND')
 
@@ -103,14 +98,14 @@ export class AuthService {
       userId: user.id,
       token: await this.hashService.generateHash(email),
       type: 'forgot_password',
-      expiresIn: '604800',
+      expiresIn: `${604800 * 1000}`,
     })
 
-    this.mailerService.sendMail({
+    await this.mailerService.sendMail({
       to: user.email,
       from: 'noreply@application.com',
       subject: 'Recuperação de senha',
-      template: 'recover-password',
+      template: './recover-password',
       context: {
         token: forgotPasswordToken.token,
       },
@@ -120,42 +115,34 @@ export class AuthService {
   }
 
   async resetPassword({ token, password }) {
-    const forgotPasswordToken = await this.userTokenService.findOne(null, {
-      where: [{ key: 'token', value: token }],
+    const forgotPasswordToken = await this.userTokenService.findOneAndVerifyExp(
+      null,
+      {
+        where: { token, revokedAt: null },
+      },
+    )
+
+    const user = await this.userService.findOne(forgotPasswordToken.userId)
+
+    await this.userTokenService.revokeOne(forgotPasswordToken)
+
+    return this.userService.updateOne(user, {
+      password: await this.hashService.generateHash(password),
     })
-
-    const user = await this.userRepository.getOne(forgotPasswordToken.userId)
-
-    if (!user) throw new NotFoundException('USER_NOT_FOUND')
-
-    await this.userTokenService.updateOne(forgotPasswordToken.id, {
-      isRevoked: true,
-      revokedAt: new Date(),
-      status: 'revoked',
-    })
-
-    user.password = password
-
-    return this.userRepository.save(user)
   }
 
   async confirmAccount({ token }) {
-    const confirmationToken = await this.userTokenService.findOne(null, {
-      where: [{ key: 'token', value: token }],
-    })
+    const confirmationToken = await this.userTokenService.findOneAndVerifyExp(
+      null,
+      {
+        where: { token, revokedAt: null },
+      },
+    )
 
-    const user = await this.userRepository.getOne(confirmationToken.id)
+    const user = await this.userService.findOne(confirmationToken.userId)
 
-    if (!user) throw new NotFoundException('USER_NOT_FOUND')
+    await this.userTokenService.revokeOne(confirmationToken)
 
-    user.status = 'active'
-
-    await this.userTokenService.updateOne(confirmationToken.id, {
-      isRevoked: true,
-      revokedAt: new Date(),
-      status: 'revoked',
-    })
-
-    await this.userRepository.save(user)
+    return this.userService.updateOne(user, { status: 'active' })
   }
 }

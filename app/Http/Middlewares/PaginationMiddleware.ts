@@ -8,11 +8,11 @@ export class PaginationMiddleware implements NestMiddleware {
   }
 
   use(req, res, next) {
-    const skip = req.query.skip ? parseInt(req.query.skip) : 0
+    const page = req.query.page ? parseInt(req.query.page) : 0
     const limit = req.query.limit ? parseInt(req.query.limit) : 10
 
     req.pagination = {
-      skip,
+      page,
       limit,
     }
 
