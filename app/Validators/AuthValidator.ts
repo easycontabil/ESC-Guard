@@ -27,6 +27,12 @@ export class ConfirmAccountValidator {
   token: string
 }
 
+export class RefreshValidator {
+  @ApiProperty()
+  @(Joiful.string().required())
+  refreshToken: string
+}
+
 export class ResetPasswordValidator {
   @ApiProperty()
   @(Joiful.string().required())

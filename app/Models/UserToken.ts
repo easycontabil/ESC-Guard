@@ -8,14 +8,14 @@ import {
   JoinColumn,
 } from 'typeorm'
 
-import { User } from './User'
+import { User } from 'app/Models/User'
 
-@Entity('user_tokens')
+@Entity('esc_user_tokens')
 export class UserToken {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId: string
 
   @Column()
@@ -34,22 +34,22 @@ export class UserToken {
   @Column({ enum: ['created', 'used'], default: 'created' })
   status: string
 
-  @Column({ nullable: true })
+  @Column({ name: 'expires_in', nullable: true })
   expiresIn: string
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
-  @Column({ nullable: true, default: null })
+  @Column({ name: 'revoked_at', default: null })
   revokedAt: Date
 
   @ManyToOne(
     () => User,
     user => user.tokens,
   )
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: User
 }

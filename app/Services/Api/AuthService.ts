@@ -1,10 +1,11 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common'
 
+import { User } from 'app/Models/User'
 import { JwtService } from '@nestjs/jwt'
 import { MailerService } from '@nestjs-modules/mailer'
 import { CreateUserDto } from 'app/Contracts/Dtos/UserDto'
@@ -25,44 +26,89 @@ export class AuthService {
   async validateEmail(email: string) {
     const user = await this.userRepository.getOne(null, { where: { email } })
 
-    if (user) throw new UnauthorizedException('EMAIL_ALREADY_TAKEN')
+    if (user) throw new BadRequestException('EMAIL_ALREADY_TAKEN')
+  }
+
+  async generateToken(type: string, expiresIn: number, data: any) {
+    const token = await this.jwtService.signAsync(data, {
+      expiresIn,
+    })
+
+    if (data.id) {
+      await this.userTokenService.createOrUpdate({
+        type,
+        token,
+        userId: data.id,
+        expiresIn: `${expiresIn * 1000}`,
+      })
+    }
+
+    return {
+      token,
+      expiresIn,
+    }
+  }
+
+  async decodeToken(token: string) {
+    const split = token.split('Bearer ')[1]
+
+    if (split) token = split
+
+    const payload = this.jwtService.decode(token)
+
+    if (typeof payload === 'string' || !payload) {
+      throw new BadRequestException('INVALID_TOKEN')
+    }
+
+    return payload
+  }
+
+  async refresh(user: User, token: string) {
+    await this.decodeToken(token)
+
+    await this.userTokenService.findOneAndVerifyExp(null, {
+      where: { token, userId: user.id },
+    })
+
+    return {
+      accessToken: await this.generateToken(
+        'access_token',
+        10800,
+        user.toJSON(),
+      ),
+      refreshToken: await this.generateToken(
+        'refresh_token',
+        604800,
+        user.toJSON(),
+      ),
+    }
   }
 
   async login({ email, password }) {
+    email = email.trim()
+
     const user = await this.userService.findOne(null, { where: { email } })
 
     if (!(await this.hashService.compareHash(password, user.password))) {
       throw new NotFoundException('USER_NOT_FOUND')
     }
 
-    const accessTokenExp = 10800
-    const accessToken = await this.jwtService.signAsync(user.toJSON(), {
-      expiresIn: accessTokenExp,
-    })
-
-    await this.userTokenService.createOrUpdate({
-      userId: user.id,
-      token: accessToken,
-      type: 'access_token',
-      expiresIn: `${accessTokenExp * 1000}`,
-    })
-
-    const refreshTokenExp = 604800
-    const refreshToken = await this.jwtService.signAsync(user.toJSON(), {
-      expiresIn: refreshTokenExp,
-    })
-
-    await this.userTokenService.createOrUpdate({
-      userId: user.id,
-      token: refreshToken,
-      type: 'refresh_token',
-      expiresIn: `${refreshTokenExp * 1000}`,
-    })
-
-    return { accessToken, refreshToken, accessTokenExp, refreshTokenExp }
+    return {
+      accessToken: await this.generateToken(
+        'access_token',
+        10800,
+        user.toJSON(),
+      ),
+      refreshToken: await this.generateToken('refresh_token', 604800, {
+        ...user.toJSON(),
+        isRefresh: true,
+      }),
+    }
   }
 
   async register(body: CreateUserDto) {
+    body.email = body.email.trim()
+
     await this.validateEmail(body.email)
 
     body.password = await this.hashService.generateHash(body.password)
@@ -90,9 +136,7 @@ export class AuthService {
   }
 
   async forgotPassword({ email }) {
-    const user = await this.userRepository.getOne(null, { where: { email } })
-
-    if (!user) throw new NotFoundException('USER_NOT_FOUND')
+    const user = await this.userService.findOne(null, { where: { email } })
 
     const forgotPasswordToken = await this.userTokenService.createOne({
       userId: user.id,
@@ -111,7 +155,9 @@ export class AuthService {
       },
     })
 
-    return user
+    return {
+      message: `Forgot password email sent to ${user.email}`,
+    }
   }
 
   async resetPassword({ token, password }) {
@@ -125,10 +171,13 @@ export class AuthService {
     const user = await this.userService.findOne(forgotPasswordToken.userId)
 
     await this.userTokenService.revokeOne(forgotPasswordToken)
-
-    return this.userService.updateOne(user, {
+    await this.userService.updateOne(user, {
       password: await this.hashService.generateHash(password),
     })
+
+    return {
+      message: `User password ${user.name} successfully reset`,
+    }
   }
 
   async confirmAccount({ token }) {
@@ -142,7 +191,10 @@ export class AuthService {
     const user = await this.userService.findOne(confirmationToken.userId)
 
     await this.userTokenService.revokeOne(confirmationToken)
+    await this.userService.updateOne(user, { status: 'active' })
 
-    return this.userService.updateOne(user, { status: 'active' })
+    return {
+      message: `User ${user.name} has been confirmed`,
+    }
   }
 }

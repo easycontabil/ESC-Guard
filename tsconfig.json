@@ -12,6 +12,6 @@
     "baseUrl": ".",
     "rootDir": ".",
     "incremental": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   }
 }

@@ -7,11 +7,11 @@ import {
   OneToMany,
 } from 'typeorm'
 
-import { UserToken } from './UserToken'
+import { UserToken } from 'app/Models/UserToken'
 
-@Entity('users')
+@Entity('esc_users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string
 
   @Column()
@@ -29,13 +29,13 @@ export class User {
   @Column({ enum: ['pendent', 'active'], default: 'pendent' })
   status: string
 
-  @Column({ default: null })
+  @Column({ name: 'deleted_at', default: null })
   deletedAt?: Date
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date
 
   @OneToMany(

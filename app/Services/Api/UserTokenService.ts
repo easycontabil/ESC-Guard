@@ -11,6 +11,7 @@ import {
 } from 'app/Contracts/Dtos/UserDto'
 
 import { UserToken } from 'app/Models/UserToken'
+import { Options } from 'app/Decorators/Services/Options'
 import { ApiRequestContract } from '@secjs/core/contracts'
 import { UserTokenRepository } from 'app/Repositories/UserTokenRepository'
 import { PaginationContract } from '@secjs/core/contracts/PaginationContract'
@@ -19,7 +20,8 @@ import { PaginationContract } from '@secjs/core/contracts/PaginationContract'
 export class UserTokenService {
   @Inject(UserTokenRepository) private userTokenRepository: UserTokenRepository
 
-  async findOne(id: string, options?: ApiRequestContract) {
+  @Options()
+  async findOne(id?: string, options?: ApiRequestContract) {
     const model = await this.userTokenRepository.getOne(id, options)
 
     if (!model) {
@@ -29,6 +31,7 @@ export class UserTokenService {
     return model
   }
 
+  @Options()
   async findAll(pagination: PaginationContract, options?: ApiRequestContract) {
     return this.userTokenRepository.getAll(pagination, options)
   }
@@ -63,7 +66,7 @@ export class UserTokenService {
     return this.createOne(body)
   }
 
-  async findOneAndVerifyExp(id: string, options?: ApiRequestContract) {
+  async findOneAndVerifyExp(id?: string, options?: ApiRequestContract) {
     const model = await this.findOne(id, options)
 
     const dateNow = Date.now()

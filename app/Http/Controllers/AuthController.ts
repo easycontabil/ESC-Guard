@@ -3,18 +3,30 @@ import {
   ForgotPasswordValidator,
   ConfirmAccountValidator,
   ResetPasswordValidator,
+  RefreshValidator,
 } from 'app/Validators/AuthValidator'
 
 import { ApiTags } from '@nestjs/swagger'
+import { User } from 'app/Decorators/Http/User'
+import { JwtGuard } from 'app/Http/Guards/JwtGuard'
 import { AuthService } from 'app/Services/Api/AuthService'
-import { Controller, Post, Inject, Body } from '@nestjs/common'
 import { CreateUserValidator } from 'app/Validators/UserValidator'
 import { JoifulValidationPipe } from 'app/Pipes/JoifulValidationPipe'
+import { Controller, Post, Inject, Body, UseGuards } from '@nestjs/common'
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   @Inject(AuthService) authService: AuthService
+
+  @Post('refresh')
+  @UseGuards(JwtGuard)
+  async refresh(
+    @User() user,
+    @Body(JoifulValidationPipe) body: RefreshValidator,
+  ) {
+    return this.authService.refresh(user, body.refreshToken)
+  }
 
   @Post('login')
   async login(@Body(JoifulValidationPipe) body: LoginValidator) {

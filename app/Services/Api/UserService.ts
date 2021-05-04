@@ -1,4 +1,5 @@
 import { User } from 'app/Models/User'
+import { Options } from 'app/Decorators/Services/Options'
 import { ApiRequestContract } from '@secjs/core/contracts'
 import { UserRepository } from 'app/Repositories/UserRepository'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
@@ -10,7 +11,10 @@ import { GuardBaseService } from '@secjs/core/base/Services/GuardBaseService'
 export class UserService extends GuardBaseService<User> {
   @Inject(UserRepository) private userRepository: UserRepository
 
-  async findOne(id?: string | null, options?: ApiRequestContract) {
+  @Options()
+  public async findOne(id?: string | null, options?: ApiRequestContract) {
+    if (!options) options.where = {}
+
     options.where.deletedAt = null
 
     const model = await this.userRepository.getOne(id, options)
@@ -22,6 +26,7 @@ export class UserService extends GuardBaseService<User> {
     return model
   }
 
+  @Options()
   async findAll(pagination: PaginationContract, options?: ApiRequestContract) {
     options.where.deletedAt = null
 
