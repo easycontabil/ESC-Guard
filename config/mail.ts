@@ -6,7 +6,7 @@ export default {
   transport: {
     host: Env('SMTP_HOST', ''),
     port: Env({ name: 'SMTP_PORT', type: 'number' }, ''),
-    secure: false, // upgrade later with STARTTLS
+    secure: Env({ name: 'SMTP_SSL', type: 'boolean' }, false),
     auth: {
       user: Env('SMTP_USER', ''),
       pass: Env('SMTP_PASSWORD', ''),
