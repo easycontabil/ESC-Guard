@@ -74,7 +74,8 @@
     "rxjs": "^6.5.4",
     "swagger-ui-express": "^4.1.6",
     "typeorm-seeding": "^1.6.1",
-    "uuidv4": "^6.2.5"
+    "uuidv4": "^6.2.5",
+    "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "@nestjs/schematics": "^7.0.0",
@@ -117,7 +118,6 @@
     "supertest": "^4.0.2",
     "ts-jest": "26.1.0",
     "ts-loader": "^6.2.1",
-    "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
     "typeorm": "^0.2.32",
     "typescript": "^3.7.4"
