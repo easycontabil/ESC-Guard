@@ -10,8 +10,7 @@ const exec = promisify(require('child_process').exec)
 export class WelcomeController {
   constructor(private configService: ConfigService) {}
 
-  @Get()
-  @Get('/welcome')
+  @Get(['', '/welcome'])
   async welcome() {
     const commit = await exec('git rev-parse HEAD')
 

@@ -9,7 +9,7 @@ export class JwtGuard extends AuthGuard('jwt') {
   async canActivate(context: ExecutionContext): Promise<any> {
     const request = context.switchToHttp().getRequest()
 
-    const payload = await this.authService.decodeToken(
+    const payload = await this.authService.verifyToken(
       request.headers.authorization,
     )
 

@@ -49,6 +49,18 @@ export class AuthService {
     }
   }
 
+  async verifyToken(token: string) {
+    if (!token) {
+      throw new BadRequestException('INVALID_TOKEN')
+    }
+
+    const split = token.split('Bearer ')[1]
+
+    if (split) token = split
+
+    return this.jwtService.verifyAsync(token)
+  }
+
   async decodeToken(token: string) {
     const split = token.split('Bearer ')[1]
 

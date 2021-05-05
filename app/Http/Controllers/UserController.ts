@@ -11,7 +11,9 @@ import {
 } from '@nestjs/common'
 
 import { User } from 'app/Decorators/Http/User'
+import { IsUuidPipe } from 'app/Pipes/IsUuidPipe'
 import { JwtGuard } from 'app/Http/Guards/JwtGuard'
+import { OwnerGuard } from 'app/Http/Guards/OwnerGuard'
 import { UserService } from 'app/Services/Api/UserService'
 import { ApiRequestContract } from '@secjs/core/contracts'
 import { QueryParamsPipe } from 'app/Pipes/QueryParamsPipe'
@@ -40,25 +42,28 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(OwnerGuard)
   async show(
     @User() user,
-    @Param('id') id: string,
+    @Param('id', IsUuidPipe) id: string,
     @Query(QueryParamsPipe) queries: ApiRequestContract,
   ) {
     return this.userService.setGuard(user).findOne(id, queries)
   }
 
   @Put(':id')
+  @UseGuards(OwnerGuard)
   async update(
     @User() user,
-    @Param('id') id: string,
+    @Param('id', IsUuidPipe) id: string,
     @Body(JoifulValidationPipe) body: UpdateUserValidator,
   ) {
     return this.userService.setGuard(user).updateOne(id, body)
   }
 
   @Delete(':id')
-  async delete(@User() user, @Param('id') id: string) {
+  @UseGuards(OwnerGuard)
+  async delete(@User() user, @Param('id', IsUuidPipe) id: string) {
     return this.userService.setGuard(user).deleteOne(id)
   }
 }

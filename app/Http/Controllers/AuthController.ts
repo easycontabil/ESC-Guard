@@ -6,9 +6,9 @@ import {
   RefreshValidator,
 } from 'app/Validators/AuthValidator'
 
-import { ApiTags } from '@nestjs/swagger'
 import { User } from 'app/Decorators/Http/User'
 import { JwtGuard } from 'app/Http/Guards/JwtGuard'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AuthService } from 'app/Services/Api/AuthService'
 import { CreateUserValidator } from 'app/Validators/UserValidator'
 import { JoifulValidationPipe } from 'app/Pipes/JoifulValidationPipe'
@@ -20,6 +20,7 @@ export class AuthController {
   @Inject(AuthService) authService: AuthService
 
   @Post('refresh')
+  @ApiBearerAuth()
   @UseGuards(JwtGuard)
   async refresh(
     @User() user,

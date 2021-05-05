@@ -21,6 +21,7 @@ export class ApplicationProvider {
     return {
       entities: this.models,
       ...ApplicationProvider.configs.database.postgres,
+      migrations: ['database/migrations/*.js'],
     }
   }
 
