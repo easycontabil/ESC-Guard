@@ -6,9 +6,7 @@ on:
       - main
 
 env:
-  PREFIX: esc-guard
-  REGISTRY_REPO: jlenon7/$PREFIX
-  DEPLOY_CONF: deployment/$PREFIX
+  REGISTRY_REPO: jlenon7/esc-guard
 
 jobs:
   build:
@@ -19,7 +17,7 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env:
-        NPM_AUTH_PKG: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_PKG: ${{ secrets.NPM_TOKEN }}
       with:
         name: $REGISTRY_REPO
         username: ${{ secrets.DOCKER_USERNAME }}
