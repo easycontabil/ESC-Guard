@@ -19,7 +19,7 @@ jobs:
       env:
         NPM_AUTH_PKG: ${{ secrets.NPM_TOKEN }}
       with:
-        name: $REGISTRY_REPO
+        name: ${REGISTRY_REPO}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         buildargs: NPM_AUTH_PKG
