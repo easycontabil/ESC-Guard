@@ -29,7 +29,7 @@ jobs:
     - uses: actions/setup-node@v1
 
     - name: Conf ENV
-      run: cp .env.example .env
+      run: cp .env.example .env.testing
 
     - name: Conf ENV
       run: cat .env
