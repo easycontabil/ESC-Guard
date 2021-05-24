@@ -31,7 +31,7 @@ jobs:
     - name: Conf ENV
       run: cp .env.example .env
 
-    - name: Installation
+    - name: Install dependencies
       run: yarn install
 
     - name: Lint project
