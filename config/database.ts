@@ -1,4 +1,5 @@
 import Env from '@secjs/env'
+import { join } from 'path'
 
 export default {
   /*
@@ -20,7 +21,7 @@ export default {
     password: Env('DB_PASSWORD', 'root'),
     database: Env('DB_DATABASE', 'test'),
     seeds: ['database/seeds/*{.ts,.js}'],
-    migrations: ['database/migrations/*{.ts,.js}'],
+    migrations: [join(__dirname, '..', 'database', 'migrations', '*{.ts,.js}')],
     cli: {
       migrationsDir: 'database/migrations',
     },
