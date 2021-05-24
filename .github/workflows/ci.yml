@@ -1,6 +1,9 @@
 name: CI Guard
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - main
 
 env:
   DB_DATABASE: postgres
