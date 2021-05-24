@@ -31,9 +31,6 @@ jobs:
     - name: Conf ENV
       run: cp .env.example .env.testing
 
-    - name: Conf ENV
-      run: cat .env
-
     - name: Install dependencies
       run: yarn install
 
