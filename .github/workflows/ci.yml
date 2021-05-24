@@ -40,5 +40,6 @@ jobs:
     - name: Run tests
       run: yarn test
       env:
+        DB_PORT: 5433
         SMTP_USER: ${{ secrets.SMTP_USER }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
