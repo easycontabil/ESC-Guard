@@ -25,20 +25,20 @@ jobs:
           - '5433:5432'
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
 
-      - name: Conf ENV
-        run: cp .env.example .env
+    - name: Conf ENV
+      run: cp .env.example .env
 
-      - name: Installation
-        run: yarn install
+    - name: Installation
+      run: yarn install
 
-      - name: Lint project
-        run: yarn lint
+    - name: Lint project
+      run: yarn lint
 
-      - name: Run tests
-        run: yarn test
-        env:
-          - SMTP_USER: ${{ secrets.SMTP_USER }}
-          - SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+    - name: Run tests
+      run: yarn test
+      env:
+        SMTP_USER: ${{ secrets.SMTP_USER }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
