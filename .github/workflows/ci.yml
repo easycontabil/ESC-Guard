@@ -31,6 +31,9 @@ jobs:
     - name: Conf ENV
       run: cp .env.example .env
 
+    - name: Conf ENV
+      run: cat .env
+
     - name: Install dependencies
       run: yarn install
 
@@ -42,5 +45,8 @@ jobs:
       env:
         DB_PORT: 5433
         DB_SYNCHRONIZE: true
+        DB_USERNAME: ${{ env.DB_DATABASE }}
+        DB_PASSWORD: ${{ env.DB_PASSWORD }}
+        DB_DATABASE: ${{ env.DB_DATABASE }}
         SMTP_USER: ${{ secrets.SMTP_USER }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
