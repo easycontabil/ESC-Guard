@@ -1,0 +1,49 @@
+name: CI Guard
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  DB_DATABASE: postgres
+  DB_PASSWORD: docker
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${{ env.DB_DATABASE }}
+          POSTGRES_DATABASE: ${{ env.DB_DATABASE }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+        ports:
+          - '5433:5432'
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+
+    - name: Conf ENV
+      run: cp .env.example .env.testing
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Lint project
+      run: yarn lint
+
+    - name: Run tests
+      run: yarn test
+      env:
+        DB_PORT: 5433
+        DB_SYNCHRONIZE: true
+        DB_USERNAME: ${{ env.DB_DATABASE }}
+        DB_PASSWORD: ${{ env.DB_PASSWORD }}
+        DB_DATABASE: ${{ env.DB_DATABASE }}
+        SMTP_USER: ${{ secrets.SMTP_USER }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}

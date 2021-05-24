@@ -1,4 +1,3 @@
-import Env from '@secjs/env'
 import { HttpModuleOptions } from '@nestjs/common'
 
 export default {

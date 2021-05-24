@@ -11,9 +11,10 @@
     "build": "nest build",
     "format": "prettier --write \"**/*.ts\" \"test/**/*.ts\"",
     "ts-node": "ts-node --transpile-only -r tsconfig-paths/register",
+    "schema:drop": "yarn typeorm-mig schema:drop",
     "migration:run": "yarn typeorm-mig migration:run",
     "migration:revert": "yarn typeorm-mig migration:revert",
-    "migration:refresh": "yarn migration:revert && yarn migration:run",
+    "migration:refresh": "yarn schema:drop && yarn migration:run",
     "typeorm-mig": "yarn ts-node ./node_modules/.bin/typeorm --config database/ormconfig.ts",
     "typeorm-seed": "yarn ts-node ./node_modules/typeorm-seeding/dist/cli.js -r database -n ormconfig.ts",
     "start": "nest start",
@@ -27,7 +28,7 @@
     "test:watch": "NODE_ENV=testing jest --watch --setupFiles --runInBand --detectOpenHandles --testTimeout=10000",
     "test:cov": "NODE_ENV=testing jest --coverage --setupFiles --runInBand --detectOpenHandles --testTimeout=10000",
     "test:e2e": "NODE_ENV=testing jest --config ./test/jest-e2e.json --setupFiles --runInBand --detectOpenHandles --testTimeout=10000",
-    "test:debug": "DEBUG=api:* NODE_ENV=testing jest --verbose --setupFiles --runInBand --detectOpenHandles --testTimeout=10000"
+    "test:debug": "DEBUG=api:* NODE_ENV=testing node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --detectOpenHandles --testTimeout=10000"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
