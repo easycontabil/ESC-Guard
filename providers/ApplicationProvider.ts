@@ -20,8 +20,8 @@ export class ApplicationProvider {
   get typeOrmConnection() {
     return {
       entities: this.models,
+      keepConnectionAlive: true,
       ...ApplicationProvider.configs.database.postgres,
-      migrations: ['database/migrations/*.js'],
     }
   }
 
