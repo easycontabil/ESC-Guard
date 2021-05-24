@@ -10,14 +10,14 @@ services:
       - ./:/process
       - /process/node_modules
     ports:
-      - "3333:3333"
+      - "3334:3333"
     env_file:
       - .env
     networks:
-      - esc-netword
+      - esc-network
     restart: on-failure
 
 networks:
-  esc-netword:
+  esc-network:
     external:
-      name: esc-netword
+      name: esc-network

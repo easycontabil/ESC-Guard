@@ -1,0 +1,27 @@
+name: CD Guard
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PREFIX: esc-guard
+  REGISTRY_REPO: jlenon7/$PREFIX
+  DEPLOY_CONF: deployment/$PREFIX
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      env:
+        NPM_AUTH_PKG: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: $REGISTRY_REPO
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        buildargs: NPM_AUTH_PKG
