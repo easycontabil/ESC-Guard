@@ -20,7 +20,7 @@ jobs:
           POSTGRES_DATABASE: ${{ env.DB_DATABASE }}
           POSTGRES_USER: ${{ env.DB_DATABASE }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-          POSTGRES_ROOT_PASSWORD: root1234
+          POSTGRES_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
         ports:
           - '5433:5432'
 
