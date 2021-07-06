@@ -2,13 +2,22 @@ import { User } from 'app/Models/User'
 import { Options } from 'app/Decorators/Services/Options'
 import { ApiRequestContract } from '@secjs/core/contracts'
 import { UserRepository } from 'app/Repositories/UserRepository'
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { CreateUserDto, UpdateUserDto } from 'app/Contracts/Dtos/UserDto'
 import { GuardBaseService } from '@secjs/core/base/Services/GuardBaseService'
 import { PaginationContract } from '@secjs/core/contracts/PaginationContract'
+import { Token } from '@secjs/core/utils/Classes/Token'
+import { writeFile } from 'fs'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class UserService extends GuardBaseService<User> {
+  @Inject(ConfigService) private configService: ConfigService
   @Inject(UserRepository) private userRepository: UserRepository
 
   @Options()
@@ -54,6 +63,28 @@ export class UserService extends GuardBaseService<User> {
 
   async updateOne(id: string | User, body: UpdateUserDto) {
     const model = await this.findOneOrReturn(id)
+
+    if (body.image) {
+      console.log('IMAGE RECEIVED: ', body.image)
+      const imagesPath = `${this.configService.get('view.paths.images')}`
+      const fileName = `${new Date().getTime()}-${
+        body.name
+      }-${new Token().generate()}.png`
+      console.log(`IMAGES PATH: ${imagesPath}/${fileName}`)
+
+      writeFile(`${imagesPath}/${fileName}`, body.image, err => {
+        if (!err) throw new BadRequestException(err)
+      })
+
+      body.image = `${this.configService.get(
+        'app.url',
+      )}/${this.configService.get('view.paths.staticPath')}/${fileName}`
+      console.log('IMAGE LINK RESULT: ', body.image)
+    }
+
+    if (body.points) {
+      body.points = model.points + body.points
+    }
 
     return this.userRepository.updateOne(model, body)
   }

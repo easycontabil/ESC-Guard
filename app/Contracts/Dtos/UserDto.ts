@@ -28,10 +28,13 @@ export class UpdateUserDto {
   image?: string
 
   @ApiProperty()
+  points?: number
+
+  @ApiProperty()
   password?: string
 
   @ApiProperty()
-  deletedAt?: Date
+  password_confirmation?: string
 
   @ApiProperty()
   status?: string
