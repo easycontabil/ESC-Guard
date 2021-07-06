@@ -1,6 +1,7 @@
 import 'start/env'
 import 'providers/ApplicationProvider'
 import * as helmet from 'helmet'
+import * as Express from 'express'
 import * as rateLimit from 'express-rate-limit'
 
 import { AppModule } from 'app/AppModule'
@@ -20,6 +21,11 @@ async function bootstrap() {
   app.setGlobalPrefix(Config.get('app.prefix'))
   app.useGlobalInterceptors(new ResponseInterceptor())
   app.useGlobalFilters(new AllExceptionFilter(Config))
+
+  app.use(
+    Config.get('view.paths.staticPath'),
+    Express.static(Config.get('view.paths.images')),
+  )
 
   SwaggerModule.setup(
     `${Config.get('app.prefix')}/swagger`,

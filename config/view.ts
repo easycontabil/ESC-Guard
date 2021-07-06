@@ -1,3 +1,6 @@
+import { join } from 'path'
+import app from 'config/app'
+
 export default {
   /*
   |--------------------------------------------------------------------------
@@ -12,5 +15,7 @@ export default {
 
   paths: {
     mail: [process.cwd() + '/public/Views/Mail'],
+    images: join(process.cwd(), 'public', 'static', 'images'),
+    staticPath: `${app.prefix}/statics`,
   },
 }

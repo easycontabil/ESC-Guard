@@ -67,6 +67,19 @@ export default {
 
   /*
   |--------------------------------------------------------------------------
+  | Application uyrl
+  |--------------------------------------------------------------------------
+  |
+  | This value is the url of your application and can used when you
+  | need to place the application's prefix in a route, view or
+  | other location.
+  |
+  */
+
+  url: Env('APP_URL', 'http://localhost:3000'),
+
+  /*
+  |--------------------------------------------------------------------------
   | Application Version
   |--------------------------------------------------------------------------
   |

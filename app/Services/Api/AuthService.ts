@@ -5,6 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 
+import { writeFile } from 'fs'
+
 import { User } from 'app/Models/User'
 import { JwtService } from '@nestjs/jwt'
 import { MailerService } from '@nestjs-modules/mailer'
@@ -13,12 +15,15 @@ import { UserService } from 'app/Services/Api/UserService'
 import { HashService } from 'app/Services/Utils/HashService'
 import { UserRepository } from 'app/Repositories/UserRepository'
 import { UserTokenService } from 'app/Services/Api/UserTokenService'
+import { Token } from '@secjs/core/utils/Classes/Token'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class AuthService {
   @Inject(JwtService) private jwtService: JwtService
   @Inject(HashService) private hashService: HashService
   @Inject(UserService) private userService: UserService
+  @Inject(ConfigService) private configService: ConfigService
   @Inject(MailerService) private mailerService: MailerService
   @Inject(UserRepository) private userRepository: UserRepository
   @Inject(UserTokenService) private userTokenService: UserTokenService
@@ -108,7 +113,7 @@ export class AuthService {
     return {
       accessToken: await this.generateToken(
         'access_token',
-        10800,
+        10800 * 108000,
         user.toJSON(),
       ),
       refreshToken: await this.generateToken('refresh_token', 604800, {
@@ -119,6 +124,24 @@ export class AuthService {
   }
 
   async register(body: CreateUserDto) {
+    if (body.image) {
+      console.log('IMAGE RECEIVED: ', body.image)
+      const imagesPath = `${this.configService.get('view.paths.images')}`
+      const fileName = `${new Date().getTime()}-${
+        body.name
+      }-${new Token().generate()}.png`
+      console.log(`IMAGES PATH: ${imagesPath}/${fileName}`)
+
+      writeFile(`${imagesPath}/${fileName}`, body.image, err => {
+        if (!err) throw new BadRequestException(err)
+      })
+
+      body.image = `${this.configService.get(
+        'app.url',
+      )}/${this.configService.get('view.paths.staticPath')}/${fileName}`
+      console.log('IMAGE LINK RESULT: ', body.image)
+    }
+
     body.email = body.email.trim()
 
     await this.validateEmail(body.email)

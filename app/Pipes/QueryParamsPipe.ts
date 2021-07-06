@@ -1,11 +1,11 @@
-import { ApiRequestContract } from '@secjs/core/contracts'
+import { ApiRequestContract } from '@secjs/core/contracts/ApiRequestContract'
 import { PipeTransform, Injectable } from '@nestjs/common'
 
 @Injectable()
 export class QueryParamsPipe implements PipeTransform {
   transform(value: any): ApiRequestContract {
     const apiRequest: ApiRequestContract = {
-      isInternRequest: false,
+      isInternRequest: true,
       where: {},
       orderBy: {},
       includes: [],
@@ -19,9 +19,6 @@ export class QueryParamsPipe implements PipeTransform {
       if (whereKey && value[key]) {
         apiRequest.where[whereKey] = value[key]
 
-        if (apiRequest.where[whereKey] === 'null')
-          apiRequest.where[whereKey] = null
-
         return
       }
 
@@ -32,7 +29,24 @@ export class QueryParamsPipe implements PipeTransform {
       }
 
       if (includesKey && value[key]) {
-        apiRequest.includes[includesKey] = value[key]
+        if (includesKey.indexOf('.') > 0) {
+          const relations = key.split('.')
+          const mainRelation = relations[0].replace('_', '')
+
+          relations.splice(
+            relations.findIndex(r => r === `_${mainRelation}`),
+            1,
+          )
+
+          apiRequest.includes.push({
+            relation: mainRelation,
+            includes: [{ relation: relations[0] }],
+          })
+
+          return
+        }
+
+        apiRequest.includes.push({ relation: includesKey })
       }
     })
 

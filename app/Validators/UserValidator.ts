@@ -10,6 +10,8 @@ export class CreateUserValidator extends CreateUserDto {
     .required())
   email: string
 
+  image?: Buffer | string
+
   @(Joiful.string().required())
   password: string
 

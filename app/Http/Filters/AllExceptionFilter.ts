@@ -23,6 +23,10 @@ export class AllExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>()
     const request = ctx.getRequest<Request>()
 
+    if (request.url === '/favicon.ico') {
+      return
+    }
+
     const fullException = {
       name: exception.name,
       message: exception.getResponse

@@ -6,5 +6,5 @@ import { TypeOrmRepository } from '@secjs/core/base/Repositories/TypeOrmReposito
 @EntityRepository(UserToken)
 @Ignore({ onlyFromImports: true })
 export class UserTokenRepository extends TypeOrmRepository<UserToken> {
-  protected Model = new UserToken()
+  protected Model = UserToken.name
 }

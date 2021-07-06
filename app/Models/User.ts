@@ -23,6 +23,12 @@ export class User {
   @Column()
   password: string
 
+  @Column({ default: 0 })
+  points: number
+
+  @Column({ default: 'https://gtrainer.com.br/images/foto_default.png' })
+  image: string
+
   @Column({ enum: ['accountant', 'customer', 'admin'], default: 'customer' })
   role: string
 

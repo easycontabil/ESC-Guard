@@ -1,0 +1,1049 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-07-03T17:15:10.896Z",
+  "__export_source": "insomnia.desktop.app:v2021.3.0",
+  "resources": [
+    {
+      "_id": "req_8a672713560840f58f7d29cdeb55efa5",
+      "parentId": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "modified": 1625322411717,
+      "created": 1625322407094,
+      "url": "{{ _.question }}",
+      "name": "home",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1625322407094,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "parentId": "wrk_de895efe313347a69f9921f40678d0cf",
+      "modified": 1625322145787,
+      "created": 1625322145787,
+      "name": "Question",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625322145787,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_de895efe313347a69f9921f40678d0cf",
+      "parentId": null,
+      "modified": 1625014672709,
+      "created": 1625014672709,
+      "name": "EasyContabil",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_121051c0b3ca41229dccf7ace3a0babb",
+      "parentId": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "modified": 1625332393972,
+      "created": 1625162991505,
+      "url": "{{ _.question }}/doubts",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "*deletedAt",
+          "value": "null",
+          "description": "",
+          "id": "pair_532aadced7194f519f3e45e0dffd2b59",
+          "disabled": false
+        },
+        {
+          "name": "_answers",
+          "value": "answers",
+          "description": "",
+          "id": "pair_36d9d3d37be64c11b3723da166921492",
+          "disabled": true
+        },
+        {
+          "name": "_comments",
+          "value": "true",
+          "description": "",
+          "id": "pair_a0e8ce1f41564b10aac653c31df87ba1",
+          "disabled": true
+        },
+        {
+          "name": "_doubtReactions",
+          "value": "true",
+          "description": "",
+          "id": "pair_80caa96a5ec74349a72b2c2126750865",
+          "disabled": true
+        },
+        {
+          "name": "_categories",
+          "value": "true",
+          "description": "",
+          "id": "pair_5f3b3dc505d3473784fe38c6d98a558d",
+          "disabled": true
+        },
+        {
+          "name": "_categories.keywords",
+          "value": "true",
+          "description": "",
+          "id": "pair_9e6b955d83864907af2a008001f11f00",
+          "disabled": false
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_e64ce930091644849a2a7163c8569a33",
+          "disabled": false
+        },
+        {
+          "name": "",
+          "value": "",
+          "description": "",
+          "id": "pair_cb09ba2b023440ccb79a61b9dd5701b9"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625162971188.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "parentId": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "modified": 1625322151093,
+      "created": 1625162977350,
+      "name": "doubts",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625162977350,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_ed988d1c76124334a5e49c73f4d9281b",
+      "parentId": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "modified": 1625329855071,
+      "created": 1625163021479,
+      "url": "{{ _.question }}/doubts",
+      "name": "post",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\": \"Duvida\",\n\t\"description\": \"Description\",\n\t\"categories\": [\"7c33519c-4da6-4adc-8b21-2d074dcc7d0b\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_806bb140565247709a1e96aead7de29b"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_9544921932f443e2a7881e8f926a39ba"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625162971138.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_b4485ac327114932b555c9f45afd9469",
+      "parentId": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "modified": 1625329955474,
+      "created": 1625180900762,
+      "url": "{{ _.question }}/doubts/{% response 'body', 'req_ed988d1c76124334a5e49c73f4d9281b', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "_categories",
+          "value": "true",
+          "description": "",
+          "id": "pair_88f1bd6cdf554fc4b84dee31935119ad"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_aa9ff36dfe55408c8b98cd68d7b74707"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625162971088.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_fd6d35bf38a24c8d991821f93b928e32",
+      "parentId": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "modified": 1625325364975,
+      "created": 1625323322620,
+      "url": "{{ _.question }}/doubts/{% response 'body', 'req_ed988d1c76124334a5e49c73f4d9281b', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "put",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\": \"Titulo Atualizado\",\n\t\"description\": \"Descricao atualizada\",\n\t\"doubtReaction\": {\n\t\t\"liked\": false\n\t},\n\t\"close\": false,\n\t\"open\": true\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_32cc11a94f2441abac0d4c8046966cd8"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_d27ba23ed2b44d1dac048b2d7fbf71cf"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625162971038.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c3c4a497141a433eb7bf7e8bcf7f0206",
+      "parentId": "fld_d61e5ac7508849e1b070e6753a326b34",
+      "modified": 1625325334386,
+      "created": 1625325319694,
+      "url": "{{ _.question }}/doubts/{% response 'body', 'req_ed988d1c76124334a5e49c73f4d9281b', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_024ade54a27f4855b41061bef8860345"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625162970988.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_09042210a33f4c84a8687760c3cd3906",
+      "parentId": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "modified": 1625326021654,
+      "created": 1625104381622,
+      "url": "{{ _.question }}/answers",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "_answerReactions",
+          "value": "true",
+          "description": "",
+          "id": "pair_e3696327bc8944b295864ef43876178a"
+        },
+        {
+          "name": "*deletedAt",
+          "value": "null",
+          "description": "",
+          "id": "pair_74bca2ec7ba741bb81530f1cdbfc095d"
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_e64ce930091644849a2a7163c8569a33"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381622,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "parentId": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "modified": 1625322152441,
+      "created": 1625162965027,
+      "name": "answers",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625162977300,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_d26ede0c72d44d3aa9f3476331f97956",
+      "parentId": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "modified": 1625325600959,
+      "created": 1625163125463,
+      "url": "{{ _.question }}/answers",
+      "name": "post",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"doubtId\": \"{% response 'body', 'req_ed988d1c76124334a5e49c73f4d9281b', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}\",\n\t\"content\": \"Content\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_806bb140565247709a1e96aead7de29b"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_9544921932f443e2a7881e8f926a39ba"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381572,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cb17af4d34a046e0ac44077e36bdd055",
+      "parentId": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "modified": 1625324958834,
+      "created": 1625182382737,
+      "url": "{{ _.question }}/answers/{% response 'body', 'req_d26ede0c72d44d3aa9f3476331f97956', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "_doubt",
+          "value": "true",
+          "description": "",
+          "id": "pair_59e14044d2ee4d138d73b7f79343b1ac",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_b1fd19c403c949c58b0441f1fa1884c6"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381522,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_495fd2f04c2546dbabc1abce4810e993",
+      "parentId": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "modified": 1625325931647,
+      "created": 1625325524960,
+      "url": "{{ _.question }}/answers/{% response 'body', 'req_d26ede0c72d44d3aa9f3476331f97956', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "put",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"content\": \"Content atualizado\",\n\t\"solved\": false,\n\t\"answerReaction\": {\n\t\t\"liked\": true\n\t}\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_32cc11a94f2441abac0d4c8046966cd8"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_d27ba23ed2b44d1dac048b2d7fbf71cf"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381472,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0b3eba1e740f42f7b068fad865f05757",
+      "parentId": "fld_aac31e0d341c4bcf84bba8bd87e844c5",
+      "modified": 1625326003430,
+      "created": 1625325990493,
+      "url": "{{ _.question }}/answers/{% response 'body', 'req_d26ede0c72d44d3aa9f3476331f97956', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_cae4607ef8544123b43dd000fcde196b"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381422,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f1c76cf392994574bdea51dafab448fc",
+      "parentId": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "modified": 1625323270192,
+      "created": 1625163219869,
+      "url": "{{ _.question }}/comments",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "_doubt",
+          "value": "true",
+          "description": "",
+          "id": "pair_7430436fabfb455aa6d8ed2791b3b470",
+          "disabled": true
+        },
+        {
+          "name": "_answer",
+          "value": "true",
+          "description": "",
+          "id": "pair_972c9d005a14499c9ca5ccaa4dbe11f6",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_e64ce930091644849a2a7163c8569a33"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381597,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "parentId": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "modified": 1625322155408,
+      "created": 1625163210290,
+      "name": "comments",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625162977250,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_0d2acd32d7c34baaae3d5647c4367198",
+      "parentId": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "modified": 1625326110274,
+      "created": 1625163222319,
+      "url": "{{ _.question }}/comments",
+      "name": "post",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"doubtId\": \"{% response 'body', 'req_ed988d1c76124334a5e49c73f4d9281b', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}\",\n\t\"content\": \"Content\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_806bb140565247709a1e96aead7de29b"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_9544921932f443e2a7881e8f926a39ba"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381547,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d4b5c9910a2b4929871c4c2aa6ba69e4",
+      "parentId": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "modified": 1625324967767,
+      "created": 1625321995069,
+      "url": "{{ _.question }}/comments/{% response 'body', 'req_0d2acd32d7c34baaae3d5647c4367198', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "name": "_doubt",
+          "value": "true",
+          "description": "",
+          "id": "pair_3ac8c371b351421a868c026474605503",
+          "disabled": true
+        },
+        {
+          "name": "_answer",
+          "value": "true",
+          "description": "",
+          "id": "pair_5e9bc1ffede741a585aa24acec0a9435",
+          "disabled": true
+        }
+      ],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_2d5e5e409a7e45a6affa274516f61f92"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381497,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_51dd137fb19e4a23b0a9f6e860c7793c",
+      "parentId": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "modified": 1625326193327,
+      "created": 1625326059931,
+      "url": "{{ _.question }}/comments/{% response 'body', 'req_0d2acd32d7c34baaae3d5647c4367198', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "put",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"content\": \"Content atualizado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_4cbe5e809a4945c7b3584dcfdc74803d"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_f0b02405e72d40a1af03e9d20d619302"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381447,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5fefcded0765467a9acbe2b7222c8a25",
+      "parentId": "fld_63d7d78aa3b84fcc9158b3cd6cd4da21",
+      "modified": 1625326281386,
+      "created": 1625326254405,
+      "url": "{{ _.question }}/comments/{% response 'body', 'req_0d2acd32d7c34baaae3d5647c4367198', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_2054273de89d46fd8ef30be0f44bcb3f"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625104381397,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_cb1fdf94879446fb97afdc6804aa791f",
+      "parentId": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "modified": 1625327175407,
+      "created": 1625326367679,
+      "url": "{{ _.question }}/categories",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_5490be2210cc4a009b44657e3e860b11"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625326367679,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "parentId": "fld_900fb47c3fd04b5c8170d5b99c660141",
+      "modified": 1625326358067,
+      "created": 1625326356185,
+      "name": "categories",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625162977200,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_3a27ab80b8a94f0bb470b0c7f415f806",
+      "parentId": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "modified": 1625327391546,
+      "created": 1625326374317,
+      "url": "{{ _.question }}/categories",
+      "name": "post",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Categoria X\",\n\t\"description\": \"Descricao X\",\n\t\"keywords\": [\"teste\", \"teste2\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_4bd981766a184ff8a5976d1c57bb9bcb"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_ff2a4ecfe8f847bf9095daa1d4032999"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625326367629,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_f050ba5196264f0b88d84362cdbfc43d",
+      "parentId": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "modified": 1625327184535,
+      "created": 1625326378717,
+      "url": "{{ _.question }}/categories/{% response 'body', 'req_3a27ab80b8a94f0bb470b0c7f415f806', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "get",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_4e78be8193f44d8c80fb9980b6a96775"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625326367579,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ea6ee49304f64c3a9c4c60843d8f703c",
+      "parentId": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "modified": 1625329435940,
+      "created": 1625326385941,
+      "url": "{{ _.question }}/categories/{% response 'body', 'req_3a27ab80b8a94f0bb470b0c7f415f806', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "put",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Categoria Y\",\n\t\"description\": \"Descricao Y\",\n\t\"keywords\": [\"teste\", \"teste2\", \"oi\"]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_4c1b26e8527d4348a27d17bc047a6fe6"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_5627c744b14c414ead2a648bc28f6716"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625326367529,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_669dedd076b84bb1813fd746a1e3e936",
+      "parentId": "fld_61c413d9b49c4c879ef71e2c15efddd4",
+      "modified": 1625327193583,
+      "created": 1625326395785,
+      "url": "{{ _.question }}/categories/{% response 'body', 'req_3a27ab80b8a94f0bb470b0c7f415f806', 'b64::JC5kYXRhLmlk::46b', 'never', 60 %}",
+      "name": "delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_3e2decc91de24d8f84d48781b885cbaa"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625326367479,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_414c362174aa4c43936d41a2f6b5244c",
+      "parentId": "fld_c10db90c60e44ce39c200a30cddc7f7c",
+      "modified": 1625322132784,
+      "created": 1625014680065,
+      "url": "{{ _.guard }}",
+      "name": "home",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1625321360530,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_c10db90c60e44ce39c200a30cddc7f7c",
+      "parentId": "wrk_de895efe313347a69f9921f40678d0cf",
+      "modified": 1625321287430,
+      "created": 1625321283983,
+      "name": "Guard",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625014680015,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_71700570cc20418585582ed14ebc1098",
+      "parentId": "fld_b56f9a816c2241e586a49f6482e16124",
+      "modified": 1625321891574,
+      "created": 1625321373004,
+      "url": "{{ _.guard }}/auth/me",
+      "name": "me",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {% response 'body', 'req_58c521d3059041a18bb484f4619aaa87', 'b64::JC5kYXRhLmFjY2Vzc1Rva2VuLnRva2Vu::46b', 'no-history', 60 %}",
+          "description": "",
+          "id": "pair_a5b11262cf434de494ebdeb4b9001146"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625321373004,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_b56f9a816c2241e586a49f6482e16124",
+      "parentId": "fld_c10db90c60e44ce39c200a30cddc7f7c",
+      "modified": 1625321360480,
+      "created": 1625321360480,
+      "name": "auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1625321360480,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_58c521d3059041a18bb484f4619aaa87",
+      "parentId": "fld_b56f9a816c2241e586a49f6482e16124",
+      "modified": 1625325942422,
+      "created": 1625321389333,
+      "url": "{{ _.guard }}/auth/login",
+      "name": "login",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"lenonsec8@gmail.com\",\n\t\"password\": \"12345\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_bfb05ad9462746e3baab03ca81224c73"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625321372979,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c27ff365fd6c46a794f7195171abbc07",
+      "parentId": "fld_b56f9a816c2241e586a49f6482e16124",
+      "modified": 1625325617110,
+      "created": 1625321379736,
+      "url": "{{ _.guard }}/auth/register",
+      "name": "register",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"João Lenon\",\n\t\"email\": \"lenonsec8@gmail.com\",\n\t\"password\": \"12345\",\n\t\"password_confirmation\": \"12345\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_b7a9f8335f6e45d1a51a2ded32a1dfcf"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1625321372954,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_e9ee99b5ddefba60134cbdd45fb285363d10e6f3",
+      "parentId": "wrk_de895efe313347a69f9921f40678d0cf",
+      "modified": 1625321420742,
+      "created": 1625014672821,
+      "name": "Base Environment",
+      "data": {
+        "guard": "http://localhost:3000/grd",
+        "question": "http://localhost:3001/qst"
+      },
+      "dataPropertyOrder": { "&": ["guard", "question"] },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1625014672821,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_e9ee99b5ddefba60134cbdd45fb285363d10e6f3",
+      "parentId": "wrk_de895efe313347a69f9921f40678d0cf",
+      "modified": 1625014672822,
+      "created": 1625014672822,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_138f56338a0f4a16bcf2d2c595e74eb6",
+      "parentId": "wrk_de895efe313347a69f9921f40678d0cf",
+      "modified": 1625014672715,
+      "created": 1625014672715,
+      "fileName": "EasyContabil",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}
