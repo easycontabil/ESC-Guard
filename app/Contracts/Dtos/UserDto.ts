@@ -25,7 +25,7 @@ export class UpdateUserDto {
   email?: string
 
   @ApiProperty()
-  image?: string
+  image?: Buffer | string
 
   @ApiProperty()
   points?: number

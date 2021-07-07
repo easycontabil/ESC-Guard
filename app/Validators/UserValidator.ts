@@ -10,6 +10,7 @@ export class CreateUserValidator extends CreateUserDto {
     .required())
   email: string
 
+  @(Joiful.any().optional())
   image?: Buffer | string
 
   @(Joiful.string().required())
@@ -21,22 +22,25 @@ export class CreateUserValidator extends CreateUserDto {
 
 export class UpdateUserValidator extends UpdateUserDto {
   @(Joiful.string().optional())
-  name: string
+  name?: string
 
   @(Joiful.string()
     .email()
     .optional())
-  email: string
+  email?: string
+
+  @(Joiful.any().optional())
+  image?: Buffer | string
 
   @(Joiful.string().optional())
-  password: string
+  password?: string
 
   @(Joiful.string().optional())
-  password_confirmation: string
+  password_confirmation?: string
 
   @(Joiful.date().optional())
-  deletedAt: Date
+  deletedAt?: Date
 
   @(Joiful.string().optional())
-  status: string
+  status?: string
 }
