@@ -8,7 +8,7 @@ export class CreateUserDto {
   email: string
 
   @ApiProperty()
-  image?: Buffer | string
+  image?: string
 
   @ApiProperty()
   password: string

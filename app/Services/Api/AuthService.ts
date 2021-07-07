@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 
-import { writeFile } from 'fs'
+import { writeFile } from 'fs/promises'
 
 import { User } from 'app/Models/User'
 import { JwtService } from '@nestjs/jwt'
@@ -125,21 +125,19 @@ export class AuthService {
 
   async register(body: CreateUserDto) {
     if (body.image) {
-      console.log('IMAGE RECEIVED: ', body.image)
       const imagesPath = `${this.configService.get('view.paths.images')}`
       const fileName = `${new Date().getTime()}-${
         body.name
       }-${new Token().generate()}.png`
-      console.log(`IMAGES PATH: ${imagesPath}/${fileName}`)
 
-      writeFile(`${imagesPath}/${fileName}`, body.image, err => {
-        if (!err) throw new BadRequestException(err)
-      })
+      await writeFile(
+        `${imagesPath}/${fileName}`,
+        Buffer.from(body.image, 'base64'),
+      )
 
       body.image = `${this.configService.get(
         'app.url',
-      )}/${this.configService.get('view.paths.staticPath')}/${fileName}`
-      console.log('IMAGE LINK RESULT: ', body.image)
+      )}${this.configService.get('view.paths.staticPath')}/${fileName}`
     }
 
     body.email = body.email.trim()

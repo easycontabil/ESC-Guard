@@ -44,7 +44,7 @@
     "@nestjs/typeorm": "^7.1.5",
     "@secjs/core": "^1.6.3",
     "@secjs/env": "^1.0.5",
-    "@types/node": "^13.9.1",
+    "@types/node": "14.0.0",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
