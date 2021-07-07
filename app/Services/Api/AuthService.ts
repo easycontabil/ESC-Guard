@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 
-import { writeFile } from 'fs/promises'
+import { promises as fsp } from 'fs'
 
 import { User } from 'app/Models/User'
 import { JwtService } from '@nestjs/jwt'
@@ -130,7 +130,7 @@ export class AuthService {
         body.name
       }-${new Token().generate()}.png`
 
-      await writeFile(
+      await fsp.writeFile(
         `${imagesPath}/${fileName}`,
         Buffer.from(body.image, 'base64'),
       )

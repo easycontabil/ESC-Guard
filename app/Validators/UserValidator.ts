@@ -30,7 +30,7 @@ export class UpdateUserValidator extends UpdateUserDto {
   email?: string
 
   @(Joiful.string().optional())
-  image?: Buffer | string
+  image?: string
 
   @(Joiful.string().optional())
   password?: string
