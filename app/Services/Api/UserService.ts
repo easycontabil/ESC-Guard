@@ -9,9 +9,11 @@ import { PaginationContract } from '@secjs/core/contracts/PaginationContract'
 import { Token } from '@secjs/core/utils/Classes/Token'
 import { promises as fsp } from 'fs'
 import { ConfigService } from '@nestjs/config'
+import { HashService } from '../Utils/HashService'
 
 @Injectable()
 export class UserService extends GuardBaseService<User> {
+  @Inject(HashService) private hashService: HashService
   @Inject(ConfigService) private configService: ConfigService
   @Inject(UserRepository) private userRepository: UserRepository
 
@@ -73,6 +75,10 @@ export class UserService extends GuardBaseService<User> {
       body.image = `${this.configService.get(
         'app.url',
       )}${this.configService.get('view.paths.staticPath')}/${fileName}`
+    }
+
+    if (body.password) {
+      body.password = await this.hashService.generateHash(body.password)
     }
 
     if (body.points) {
