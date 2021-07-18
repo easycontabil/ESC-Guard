@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: esc-guard
+  namespace: easycontabil
+data:
+  HOST: "127.0.0.1"
+  PORT: "80"
+  NODE_ENV: "development"
+  API_DEBUG: "false"
+
+  APP_NAME: "ESC-Guard"
+  APP_URL: "http://a9d7e6148e4464a1f851d208703eeb95-1861267045.us-east-1.elb.amazonaws.com"
+  APP_PREFIX: "/grd"
+  APP_LOCALE: "pt"
+  APP_DESCRIPTION: "Easy Contabil Authentication"
+  APP_KEY: "1dsa2asd3sds4dsada5fdd"
+
+  DB_CONNECTION: "postgres"
+  DB_HOST: "178.128.186.81"
+  DB_USERNAME: "postgres"
+  DB_DATABASE: "easycontabil"
+  DB_PASSWORD: "72Vd_K#haG-TuBeH"
+  DB_SYNCHRONIZE: "true"
+
+  SMTP_SSL: "false"
+  SMTP_HOST: 'smtp.gmail.com'
+  SMTP_PORT: "587"
+  SMTP_USER: 'lenonsec7@gmail.com'
+  SMTP_PASSWORD: 'pqeyqdmfbhfknnim'
+  SMTP_DEFAULT_FROM: 'suporte@easycontabil.com.br'
+
+  REDIS_HOST: "127.0.0.1"
+  REDIS_PORT: "6379"
+  REDIS_PASSWORD: "UHhoau8UcLKwHFV3f4EZUSN2KHTnA1Ck"

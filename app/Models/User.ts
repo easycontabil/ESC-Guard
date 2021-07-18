@@ -8,6 +8,8 @@ import {
 } from 'typeorm'
 
 import { UserToken } from 'app/Models/UserToken'
+import Env from '@secjs/env'
+import { Notification } from './Notification'
 
 @Entity('esc_users')
 export class User {
@@ -26,11 +28,22 @@ export class User {
   @Column({ default: 0 })
   points: number
 
-  @Column({ default: 'http://127.0.0.1:3000/grd/statics/default.png' })
+  @Column({
+    default: `${Env('APP_URL', 'http://127.0.0.1')}/grd/statics/default.png`,
+  })
   image: string
 
   @Column({ enum: ['accountant', 'customer', 'admin'], default: 'customer' })
   role: string
+
+  @Column({ default: 0 })
+  nmrDuvidas: number
+
+  @Column({ default: 0 })
+  nmrRespostas: number
+
+  @Column({ default: 0 })
+  nmrResolucoes: number
 
   @Column({ enum: ['pendent', 'active'], default: 'pendent' })
   status: string
@@ -49,6 +62,12 @@ export class User {
     token => token.user,
   )
   tokens: UserToken[]
+
+  @OneToMany(
+    () => Notification,
+    notification => notification.user,
+  )
+  notifications: Notification[]
 
   toJSON() {
     const json = { ...this }

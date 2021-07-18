@@ -12,7 +12,15 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { AuthService } from 'app/Services/Api/AuthService'
 import { CreateUserValidator } from 'app/Validators/UserValidator'
 import { JoifulValidationPipe } from 'app/Pipes/JoifulValidationPipe'
-import { Controller, Post, Inject, Body, Get, UseGuards } from '@nestjs/common'
+import {
+  Controller,
+  Post,
+  Inject,
+  Body,
+  Get,
+  UseGuards,
+  Query,
+} from '@nestjs/common'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -58,6 +66,11 @@ export class AuthController {
     @Body(JoifulValidationPipe) body: ConfirmAccountValidator,
   ) {
     return this.authService.confirmAccount(body)
+  }
+
+  @Get('confirm')
+  async confirmAccountGet(@Query('token') token: string) {
+    return this.authService.confirmAccount({ token })
   }
 
   @Post('reset')
